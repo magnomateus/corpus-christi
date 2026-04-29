@@ -383,16 +383,18 @@ strong, b {
    ========================================================================== */
 
 .urgency-bar {
-    background: linear-gradient(90deg, var(--coral) 0%, var(--coral-dark) 100%);
+    background: var(--coral-dark);
     color: var(--text-white);
-    padding: 11px 0;
+    padding: 12px 0;
     font-size: 0.9375rem;
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.3px;
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.4px;
     text-align: center;
     position: relative;
     z-index: 10;
-    box-shadow: 0 2px 12px rgba(224, 127, 101, 0.25);
+    box-shadow:
+        0 2px 12px rgba(224, 127, 101, 0.30),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
 }
 
 .urgency-bar .container {
@@ -400,7 +402,7 @@ strong, b {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 6px 16px;
+    gap: 4px 18px;
 }
 
 .urgency-item {
@@ -412,7 +414,8 @@ strong, b {
 
 .urgency-bar strong {
     font-weight: var(--weight-extrabold);
-    color: #FFF7E6;
+    color: var(--gold-light);
+    letter-spacing: 0.6px;
 }
 
 .urgency-icon {
@@ -421,8 +424,12 @@ strong, b {
 }
 
 .urgency-divider {
-    opacity: 0.55;
-    font-weight: var(--weight-bold);
+    display: inline-block;
+    width: 1px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.45);
+    vertical-align: middle;
+    font-size: 0;
 }
 
 
@@ -521,7 +528,7 @@ strong, b {
 }
 
 .hero-sub-headline strong {
-    color: var(--text-dark);
+    color: var(--sky-blue-dark);
     font-weight: var(--weight-bold);
 }
 
