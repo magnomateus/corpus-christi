@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const SPEED_PX_PER_SEC = 45;   // velocidade da rolagem
+        const SPEED_PX_PER_SEC = 80;   // velocidade da rolagem
         const TOUCH_PAUSE      = 1500; // após touch/wheel
         const CLICK_PAUSE      = 2500; // após clique seta/dot
 
