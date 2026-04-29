@@ -795,6 +795,9 @@ strong, b {
 
 /* === RESPONSIVO — Content === */
 @media (max-width: 768px) {
+    .content-section .section-title {
+        font-size: 2.25rem;
+    }
     .bonus-highlight a {
         font-size: 0.9375rem;
         padding: 14px 14px;
