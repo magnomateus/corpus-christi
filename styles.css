@@ -836,6 +836,11 @@ strong, b {
     background: radial-gradient(circle, rgba(212, 166, 86, 0.18) 0%, transparent 70%);
 }
 
+.target-section .highlight-gold {
+    color: var(--gold-light);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
 .target-section .container {
     position: relative;
     z-index: 1;
