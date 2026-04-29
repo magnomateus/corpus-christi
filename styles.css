@@ -1240,7 +1240,7 @@ strong, b {
 /* Capa do produto no Premium */
 .premium-cover-wrapper {
     margin: 0 auto var(--space-md);
-    max-width: 220px;
+    max-width: 300px;
 }
 
 .premium-cover {
@@ -1467,7 +1467,7 @@ strong, b {
         font-size: 2.375rem;
     }
     .premium-cover-wrapper {
-        max-width: 180px;
+        max-width: 240px;
     }
     .premium-cover {
         border-width: 3px;
