@@ -961,6 +961,10 @@ strong, b {
     background: var(--cream);
 }
 
+.bonus-section .section-title {
+    font-weight: var(--weight-extrabold);
+}
+
 .bonus-subtitle {
     text-align: center;
     font-size: 1.0625rem;
