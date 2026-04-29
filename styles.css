@@ -469,23 +469,6 @@ strong, b {
     z-index: 1;
 }
 
-/* Pré-headline (badge) */
-.hero-pre-headline {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(122, 184, 224, 0.18);
-    color: var(--sky-blue-dark);
-    padding: 7px 18px;
-    border-radius: var(--radius-pill);
-    font-family: var(--font-heading);
-    font-size: 0.875rem;
-    font-weight: var(--weight-bold);
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    margin-bottom: var(--space-md);
-}
-
 /* Headline principal */
 .hero-headline {
     font-size: var(--h1-size);
@@ -574,10 +557,6 @@ strong, b {
 
     .hero-section {
         padding: var(--space-lg) 0 var(--space-md);
-    }
-    .hero-pre-headline {
-        font-size: 0.75rem;
-        padding: 6px 14px;
     }
     .hero-headline-emph {
         font-size: 0.72em;
