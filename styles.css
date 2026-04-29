@@ -345,7 +345,7 @@ strong, b {
 /* === Mobile (até 768px) === */
 @media (max-width: 768px) {
     :root {
-        --h1-size: 2.125rem;     /* 34px */
+        --h1-size: 1.875rem;     /* 30px (era 34px) */
         --h2-size: 1.625rem;     /* 26px */
         --h3-size: 1.25rem;      /* 20px */
         --body-size: 1rem;       /* 16px */
@@ -369,11 +369,19 @@ strong, b {
     }
 }
 
-/* === Mobile pequeno (até 380px) === */
-@media (max-width: 380px) {
+/* === Mobile pequeno (até 420px — alvo Instagram in-app browser) === */
+@media (max-width: 420px) {
     :root {
-        --h1-size: 1.875rem;     /* 30px */
+        --h1-size: 1.625rem;     /* 26px */
         --h2-size: 1.5rem;       /* 24px */
+    }
+}
+
+/* === Mobile muito pequeno (até 360px) === */
+@media (max-width: 360px) {
+    :root {
+        --h1-size: 1.5rem;       /* 24px */
+        --container-padding: 12px;
     }
 }
 
@@ -539,20 +547,25 @@ strong, b {
 /* === RESPONSIVO — Hero === */
 @media (max-width: 768px) {
     .urgency-bar {
-        padding: 10px 0;
-        font-size: 1rem;
+        padding: 9px 0;
+        font-size: 0.9375rem;
+        letter-spacing: 0.2px;
     }
 
     .hero-section {
-        padding: var(--space-lg) 0 var(--space-md);
+        padding: var(--space-md) 0 var(--space-sm);
+    }
+    .hero-headline {
+        line-height: 1.12;
     }
     .hero-headline-emph {
         font-size: 0.72em;
     }
     .hero-sub-headline {
-        font-size: 1.125rem;
-        line-height: 1.55;
+        font-size: 1.0625rem;
+        line-height: 1.5;
         padding-top: var(--space-sm);
+        margin-bottom: var(--space-md);
     }
     .hero-sub-headline::before {
         width: 44px;
@@ -560,8 +573,8 @@ strong, b {
         margin-bottom: var(--space-sm);
     }
     .hero-mockup {
-        max-width: 400px;
-        margin-bottom: var(--space-md);
+        max-width: 360px;
+        margin-bottom: var(--space-sm);
     }
     .hero-mockup img {
         border-radius: var(--radius-md);
@@ -577,6 +590,39 @@ strong, b {
     .hero-section::after {
         width: 250px;
         height: 250px;
+    }
+}
+
+/* === Mobile estreito (Instagram in-app browser, telas ≤420px) === */
+@media (max-width: 420px) {
+    .urgency-bar {
+        font-size: 0.875rem;
+        padding: 8px 0;
+    }
+    .hero-mockup {
+        max-width: 320px;
+    }
+    .hero-mockup img {
+        border-width: 3px;
+    }
+    .hero-sub-headline {
+        font-size: 1rem;
+    }
+}
+
+/* === Mobile muito estreito (≤360px) === */
+@media (max-width: 360px) {
+    .urgency-bar {
+        font-size: 0.8125rem;
+        padding: 7px 0;
+        letter-spacing: 0;
+    }
+    .hero-mockup {
+        max-width: 280px;
+    }
+    .hero-trust {
+        font-size: 0.75rem;
+        gap: 6px 10px;
     }
 }
 
