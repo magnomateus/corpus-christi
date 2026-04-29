@@ -474,12 +474,12 @@ strong, b {
 
 /* Sub-headline (após o mockup, antes do CTA) */
 .hero-sub-headline {
-    font-size: 1.375rem;
+    font-size: 1.5rem;
     color: var(--text-dark);
     line-height: 1.5;
-    max-width: 720px;
+    max-width: 740px;
     margin: 0 auto var(--space-lg);
-    font-weight: var(--weight-regular);
+    font-weight: var(--weight-medium);
     letter-spacing: 0.1px;
     position: relative;
     padding-top: var(--space-md);
@@ -547,7 +547,7 @@ strong, b {
         font-size: 0.72em;
     }
     .hero-sub-headline {
-        font-size: 1.0625rem;
+        font-size: 1.125rem;
         line-height: 1.55;
         padding-top: var(--space-sm);
     }
