@@ -85,6 +85,83 @@ document.addEventListener('DOMContentLoaded', function () {
     startCountdown();
 
     /* ======================================================================
+       CARROSSEL DE MOLDES — scroll-snap nativo + setas + dots + teclado
+       ====================================================================== */
+    function setupCarousel() {
+        const track = document.getElementById('carousel-track');
+        const prev  = document.getElementById('carousel-prev');
+        const next  = document.getElementById('carousel-next');
+        const dotsBox = document.getElementById('carousel-dots');
+        if (!track) return;
+
+        const slides = Array.from(track.children);
+        if (!slides.length) return;
+
+        function scrollByOne(direction) {
+            const slideW = slides[0].getBoundingClientRect().width;
+            const gap = parseInt(getComputedStyle(track).gap) || 0;
+            track.scrollBy({ left: (slideW + gap) * direction, behavior: 'smooth' });
+        }
+
+        if (prev) prev.addEventListener('click', () => scrollByOne(-1));
+        if (next) next.addEventListener('click', () => scrollByOne(1));
+
+        // Cria dots — um por slide
+        if (dotsBox) {
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'carousel-dot';
+                dot.setAttribute('aria-label', `Ir para imagem ${i + 1}`);
+                dot.addEventListener('click', () => {
+                    slides[i].scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'center'
+                    });
+                });
+                dotsBox.appendChild(dot);
+            });
+        }
+
+        // Atualiza o dot ativo conforme o usuário rola/swipa
+        function updateActiveDot() {
+            const trackRect = track.getBoundingClientRect();
+            const center = trackRect.left + trackRect.width / 2;
+            let nearestIdx = 0;
+            let nearestDist = Infinity;
+            slides.forEach((s, i) => {
+                const r = s.getBoundingClientRect();
+                const slideCenter = r.left + r.width / 2;
+                const dist = Math.abs(slideCenter - center);
+                if (dist < nearestDist) {
+                    nearestDist = dist;
+                    nearestIdx = i;
+                }
+            });
+            if (dotsBox) {
+                Array.from(dotsBox.children).forEach((d, i) => {
+                    d.classList.toggle('is-active', i === nearestIdx);
+                });
+            }
+        }
+
+        let scrollTimer;
+        track.addEventListener('scroll', () => {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(updateActiveDot, 60);
+        });
+        updateActiveDot();
+
+        // Teclado (← →) quando o track está focado
+        track.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByOne(-1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); scrollByOne(1); }
+        });
+    }
+    setupCarousel();
+
+    /* ======================================================================
        FAQ ACCORDION — apenas 1 item aberto por vez
        Acessível: usa aria-expanded nos botões.
        ====================================================================== */
