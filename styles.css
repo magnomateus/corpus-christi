@@ -1144,29 +1144,7 @@ strong, b {
     z-index: 1;
 }
 
-/* === Countdown box === */
-.countdown-timer-box {
-    background: linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
-    color: var(--text-white);
-    padding: var(--space-md);
-    border-radius: var(--radius-md);
-    text-align: center;
-    max-width: 380px;
-    margin: 0 auto var(--space-lg);
-    box-shadow: 0 8px 24px rgba(224, 127, 101, 0.30);
-}
-
-.countdown-label {
-    font-family: var(--font-heading);
-    font-size: 0.875rem;
-    font-weight: var(--weight-bold);
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    opacity: 0.95;
-    color: var(--text-white);
-}
-
+/* === Countdown standalone (sem card, abaixo do título) === */
 .timer-display {
     font-family: 'Courier New', 'Roboto Mono', monospace;
     font-size: 2.625rem;
@@ -1175,6 +1153,16 @@ strong, b {
     color: var(--text-white);
     line-height: 1;
     margin: 0;
+}
+
+.timer-standalone {
+    color: var(--coral-dark);
+    text-align: center;
+    display: block;
+    margin: calc(var(--space-md) * -0.5) auto var(--space-lg);
+    font-size: 3rem;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 8px rgba(224, 127, 101, 0.18);
 }
 
 /* === Pricing grid === */
@@ -1439,12 +1427,13 @@ strong, b {
 }
 
 @media (max-width: 768px) {
-    .countdown-timer-box {
-        max-width: 320px;
-    }
     .timer-display {
         font-size: 2.125rem;
         letter-spacing: 2px;
+    }
+    .timer-standalone {
+        font-size: 2.5rem;
+        letter-spacing: 3px;
     }
     .pricing-card {
         padding: var(--space-lg) var(--space-md);
