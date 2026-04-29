@@ -765,9 +765,10 @@ strong, b {
 }
 
 .bonus-arrow {
-    display: inline-block;
+    flex-basis: 100%;
     font-size: 1.125rem;
     animation: bonus-bounce 1.6s ease-in-out infinite;
+    margin-top: 2px;
 }
 
 @keyframes bonus-bounce {
