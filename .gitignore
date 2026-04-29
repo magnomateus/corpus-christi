@@ -1,0 +1,49 @@
+# === Sistema operacional ===
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# === Editores / IDEs ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.history/
+
+# === Diretório de scratch (cache de pesquisa, downloads temporários) ===
+.tmp/
+*.tmp
+*.cache
+
+# === Material de referência local (não vai pro repo) ===
+imagens concorrente/
+referencias/
+research/
+
+# === Logs ===
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === Variáveis de ambiente / segredos ===
+.env
+.env.local
+.env.*.local
+
+# === Dependências (caso futuramente entrem) ===
+node_modules/
+package-lock.json
+
+# === Build / dist ===
+dist/
+build/
+.next/
+.parcel-cache/
+
+# === Backups ===
+*.bak
+*.swp
+*~
