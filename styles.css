@@ -967,19 +967,6 @@ strong, b {
     line-height: 1.15;
 }
 
-.bonus-subtitle {
-    text-align: center;
-    font-size: 1.0625rem;
-    color: var(--text-medium);
-    margin-bottom: var(--space-lg);
-    font-weight: var(--weight-medium);
-}
-
-.bonus-subtitle strong {
-    color: var(--gold-dark);
-    font-weight: var(--weight-bold);
-}
-
 /* Grid 2x2 desktop / 1 col mobile */
 .bonus-grid {
     display: grid;
