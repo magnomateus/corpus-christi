@@ -1423,9 +1423,6 @@ strong, b {
         max-width: 480px;
         gap: var(--space-lg);
     }
-    /* Premium fica em cima no mobile (mais visualmente prominente) */
-    .pricing-card-premium { order: 1; }
-    .pricing-card-basic   { order: 2; }
 }
 
 @media (max-width: 768px) {
