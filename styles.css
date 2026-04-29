@@ -497,10 +497,10 @@ strong, b {
 
 /* Sub-headline (após o mockup, antes do CTA) */
 .hero-sub-headline {
-    font-size: 1.1875rem;
+    font-size: 1.375rem;
     color: var(--text-dark);
-    line-height: 1.55;
-    max-width: 680px;
+    line-height: 1.5;
+    max-width: 720px;
     margin: 0 auto var(--space-lg);
     font-weight: var(--weight-regular);
     letter-spacing: 0.1px;
@@ -577,8 +577,8 @@ strong, b {
         font-size: 0.72em;
     }
     .hero-sub-headline {
-        font-size: 1rem;
-        line-height: 1.6;
+        font-size: 1.0625rem;
+        line-height: 1.55;
         padding-top: var(--space-sm);
     }
     .hero-sub-headline::before {
