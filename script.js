@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const today = new Date();
         const months = [
-            'JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO',
-            'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
         ];
-        el.textContent = `HOJE: ${today.getDate()} DE ${months[today.getMonth()]}`;
+        el.textContent = `${today.getDate()} de ${months[today.getMonth()]}`;
     }
     setCurrentDate();
 
