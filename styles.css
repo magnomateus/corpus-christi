@@ -1240,13 +1240,16 @@ strong, b {
 /* Capa do produto no Premium */
 .premium-cover-wrapper {
     margin: 0 auto var(--space-md);
-    max-width: 180px;
+    max-width: 220px;
 }
 
 .premium-cover {
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 12px 22px rgba(45, 74, 107, 0.20));
+    border-radius: var(--radius-md);
+    border: 4px solid var(--gold-light);
+    box-shadow: 0 12px 24px rgba(45, 74, 107, 0.18),
+                0 0 0 4px rgba(255, 255, 255, 0.6);
 }
 
 /* Plan name (ambos planos) */
@@ -1464,7 +1467,10 @@ strong, b {
         font-size: 2.375rem;
     }
     .premium-cover-wrapper {
-        max-width: 150px;
+        max-width: 180px;
+    }
+    .premium-cover {
+        border-width: 3px;
     }
     .ribbon {
         font-size: 0.75rem;
