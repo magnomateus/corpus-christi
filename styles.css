@@ -1326,14 +1326,6 @@ strong, b {
     color: var(--gold-dark);
 }
 
-.price-subtext {
-    font-size: 0.875rem;
-    color: var(--success-dark);
-    font-weight: var(--weight-bold);
-    font-style: italic;
-    margin-top: 4px;
-}
-
 /* Lista de features */
 .plan-features {
     list-style: none;
