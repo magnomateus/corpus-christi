@@ -580,6 +580,28 @@ strong, b {
     background: var(--sky-blue-light);
 }
 
+/* === Showcase principal (imagem grande de moldes + tapetes) === */
+.content-showcase {
+    max-width: 600px;
+    margin: 0 auto var(--space-xl);
+    text-align: center;
+}
+
+.content-showcase img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 36px rgba(45, 74, 107, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+    .content-showcase {
+        max-width: 420px;
+        margin-bottom: var(--space-lg);
+    }
+}
+
 /* === CARROSSEL DE MOLDES === */
 .carousel-wrapper {
     position: relative;
