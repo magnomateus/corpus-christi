@@ -383,7 +383,7 @@ strong, b {
    ========================================================================== */
 
 .urgency-bar {
-    background: var(--coral-dark);
+    background: #B5443A;
     color: var(--text-white);
     padding: 12px 0;
     font-size: 0.9375rem;
@@ -393,43 +393,13 @@ strong, b {
     position: relative;
     z-index: 10;
     box-shadow:
-        0 2px 12px rgba(224, 127, 101, 0.30),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
-}
-
-.urgency-bar .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 4px 18px;
-}
-
-.urgency-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
+        0 2px 12px rgba(181, 68, 58, 0.35),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 
 .urgency-bar strong {
     font-weight: var(--weight-extrabold);
-    color: var(--gold-light);
     letter-spacing: 0.6px;
-}
-
-.urgency-icon {
-    font-size: 1.0625rem;
-    line-height: 1;
-}
-
-.urgency-divider {
-    display: inline-block;
-    width: 1px;
-    height: 14px;
-    background: rgba(255, 255, 255, 0.45);
-    vertical-align: middle;
-    font-size: 0;
 }
 
 
@@ -566,15 +536,8 @@ strong, b {
 /* === RESPONSIVO — Hero === */
 @media (max-width: 768px) {
     .urgency-bar {
-        padding: 9px 0;
+        padding: 10px 0;
         font-size: 0.8125rem;
-    }
-    .urgency-bar .container {
-        flex-direction: column;
-        gap: 2px;
-    }
-    .urgency-divider {
-        display: none;
     }
 
     .hero-section {

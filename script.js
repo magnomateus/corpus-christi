@@ -50,55 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
     setCurrentDate();
 
     /* ======================================================================
-       FAIXA DE URGÊNCIA — dias até Corpus Christi (recalcula sozinho a cada dia)
-       Corpus Christi = 60 dias após Páscoa (sempre quinta-feira)
-       ====================================================================== */
-    function setDaysToCorpusChristi() {
-        const el = document.getElementById('days-remaining');
-        if (!el) return;
-
-        // Datas precomputadas (próximos anos litúrgicos)
-        const dates = {
-            2026: '2026-06-04',
-            2027: '2027-05-27',
-            2028: '2028-06-15',
-            2029: '2029-05-31',
-            2030: '2030-06-20',
-            2031: '2031-06-12',
-            2032: '2032-05-27'
-        };
-
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        // Próxima data >= hoje
-        let target = null;
-        for (const year of Object.keys(dates).sort()) {
-            const d = new Date(dates[year] + 'T00:00:00');
-            if (d >= today) { target = d; break; }
-        }
-
-        if (!target) {
-            // Sem data futura conhecida — esconde o item (graceful)
-            const item = el.closest('.urgency-item');
-            const divider = document.querySelector('.urgency-divider');
-            if (item) item.style.display = 'none';
-            if (divider) divider.style.display = 'none';
-            return;
-        }
-
-        const diffMs = target.getTime() - today.getTime();
-        const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-        el.textContent = days;
-
-        // Se já é hoje (Corpus Christi), troca o texto
-        if (days === 0) {
-            el.parentElement.innerHTML = '<span aria-hidden="true">⛪</span> HOJE É CORPUS CHRISTI!';
-        }
-    }
-    setDaysToCorpusChristi();
-
-    /* ======================================================================
        COUNTDOWN — timers da oferta (regressivo até 23:59:59 do dia)
        Reinicia automaticamente todo dia.
        Pega TODOS os elementos .timer-display — assim quando a Parte 10
