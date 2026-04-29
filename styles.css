@@ -495,19 +495,45 @@ strong, b {
     margin-top: 6px;
 }
 
-/* Sub-headline */
+/* Sub-headline (após o mockup, antes do CTA) */
 .hero-sub-headline {
-    font-size: 1.125rem;
-    color: var(--text-medium);
-    line-height: 1.6;
-    max-width: 740px;
+    font-size: 1.1875rem;
+    color: var(--text-dark);
+    line-height: 1.55;
+    max-width: 680px;
     margin: 0 auto var(--space-lg);
     font-weight: var(--weight-regular);
+    letter-spacing: 0.1px;
+    position: relative;
+    padding-top: var(--space-md);
+}
+
+/* Divider dourado decorativo acima — separa do mockup */
+.hero-sub-headline::before {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 3px;
+    margin: 0 auto var(--space-md);
+    opacity: 0.85;
 }
 
 .hero-sub-headline strong {
-    color: var(--text-dark);
+    color: var(--sky-blue-dark);
     font-weight: var(--weight-bold);
+}
+
+/* Frase de remate em italic+bold coral (eco do hero-headline-emph) */
+.hero-sub-emph {
+    display: block;
+    margin-top: 12px;
+    font-style: italic;
+    font-weight: var(--weight-bold);
+    color: var(--coral-dark);
+    font-size: 1.0625rem;
+    letter-spacing: 0.2px;
 }
 
 /* Mockup */
@@ -563,6 +589,17 @@ strong, b {
     }
     .hero-sub-headline {
         font-size: 1rem;
+        line-height: 1.6;
+        padding-top: var(--space-sm);
+    }
+    .hero-sub-headline::before {
+        width: 44px;
+        height: 2px;
+        margin-bottom: var(--space-sm);
+    }
+    .hero-sub-emph {
+        font-size: 0.9375rem;
+        margin-top: 10px;
     }
     .hero-mockup {
         max-width: 300px;
