@@ -962,7 +962,7 @@ strong, b {
 }
 
 .bonus-section .section-title {
-    font-size: 3rem;
+    font-size: 2.625rem;
     font-weight: var(--weight-extrabold);
     line-height: 1.15;
 }
@@ -1085,7 +1085,7 @@ strong, b {
 /* === RESPONSIVO — Bônus === */
 @media (max-width: 768px) {
     .bonus-section .section-title {
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
     .bonus-grid {
         grid-template-columns: 1fr;
