@@ -85,36 +85,48 @@ document.addEventListener('DOMContentLoaded', function () {
     startCountdown();
 
     /* ======================================================================
-       CARROSSEL DE MOLDES — scroll-snap nativo + setas + dots + teclado
+       CARROSSEL DE MOLDES — rolagem contínua infinita
+       Estratégia: clona os 12 slides (DOM = 24), roda continuamente via
+       requestAnimationFrame, e ao chegar no "ponto médio" reseta scrollLeft
+       pra 0 invisivelmente (clone[0] === slide[0] visualmente).
        ====================================================================== */
     function setupCarousel() {
-        const track = document.getElementById('carousel-track');
-        const prev  = document.getElementById('carousel-prev');
-        const next  = document.getElementById('carousel-next');
+        const track   = document.getElementById('carousel-track');
+        const prev    = document.getElementById('carousel-prev');
+        const next    = document.getElementById('carousel-next');
         const dotsBox = document.getElementById('carousel-dots');
         if (!track) return;
 
-        const slides = Array.from(track.children);
-        if (!slides.length) return;
+        const originalSlides = Array.from(track.children);
+        const N = originalSlides.length;
+        if (!N) return;
+
+        // === Clona slides para loop infinito sem visible jump ===
+        originalSlides.forEach(s => {
+            const clone = s.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            track.appendChild(clone);
+        });
+        const allSlides = Array.from(track.children); // 2N
 
         function scrollByOne(direction) {
-            const slideW = slides[0].getBoundingClientRect().width;
-            const gap = parseInt(getComputedStyle(track).gap) || 0;
+            const slideW = originalSlides[0].getBoundingClientRect().width;
+            const gap = parseFloat(getComputedStyle(track).gap) || 0;
             track.scrollBy({ left: (slideW + gap) * direction, behavior: 'smooth' });
         }
 
         if (prev) prev.addEventListener('click', () => scrollByOne(-1));
         if (next) next.addEventListener('click', () => scrollByOne(1));
 
-        // Cria dots — um por slide
+        // === Dots — apenas N (originais) ===
         if (dotsBox) {
-            slides.forEach((_, i) => {
+            originalSlides.forEach((_, i) => {
                 const dot = document.createElement('button');
                 dot.type = 'button';
                 dot.className = 'carousel-dot';
                 dot.setAttribute('aria-label', `Ir para imagem ${i + 1}`);
                 dot.addEventListener('click', () => {
-                    slides[i].scrollIntoView({
+                    originalSlides[i].scrollIntoView({
                         behavior: 'smooth',
                         block: 'nearest',
                         inline: 'center'
@@ -124,95 +136,91 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // Atualiza o dot ativo conforme o usuário rola/swipa
         function updateActiveDot() {
+            if (!dotsBox) return;
             const trackRect = track.getBoundingClientRect();
             const center = trackRect.left + trackRect.width / 2;
-            let nearestIdx = 0;
+            let nearestOrigIdx = 0;
             let nearestDist = Infinity;
-            slides.forEach((s, i) => {
+            allSlides.forEach((s, i) => {
                 const r = s.getBoundingClientRect();
-                const slideCenter = r.left + r.width / 2;
-                const dist = Math.abs(slideCenter - center);
-                if (dist < nearestDist) {
-                    nearestDist = dist;
-                    nearestIdx = i;
+                const c = r.left + r.width / 2;
+                const d = Math.abs(c - center);
+                if (d < nearestDist) {
+                    nearestDist = d;
+                    nearestOrigIdx = i % N; // mapeia clone → original
                 }
             });
-            if (dotsBox) {
-                Array.from(dotsBox.children).forEach((d, i) => {
-                    d.classList.toggle('is-active', i === nearestIdx);
-                });
-            }
+            Array.from(dotsBox.children).forEach((dot, i) => {
+                dot.classList.toggle('is-active', i === nearestOrigIdx);
+            });
         }
 
         let scrollTimer;
         track.addEventListener('scroll', () => {
             clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(updateActiveDot, 60);
+            scrollTimer = setTimeout(updateActiveDot, 80);
         });
-        updateActiveDot();
 
-        // Teclado (← →) quando o track está focado
         track.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByOne(-1); }
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollByOne(1); }
         });
 
-        // ==== AUTOPLAY (lógica baseada em timestamp — sem race conditions) ====
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        // ==== ROLAGEM CONTÍNUA via requestAnimationFrame ====
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            updateActiveDot();
+            return;
+        }
 
-        const STEP_MS         = 4000;        // intervalo entre slides
-        const LOOPBACK_PAUSE  = 1400;        // espera animação de volta ao início terminar
-        const TOUCH_PAUSE     = 2500;        // após swipe
-        const CLICK_PAUSE     = 6000;        // após clique manual em seta/dot
-        const PAUSE_FOREVER   = 9 * 24 * 3600 * 1000; // hover/touch active
+        const SPEED_PX_PER_SEC = 45;   // velocidade da rolagem
+        const TOUCH_PAUSE      = 1500; // após touch/wheel
+        const CLICK_PAUSE      = 2500; // após clique seta/dot
 
+        let lastTime = 0;
         let pausedUntil = 0;
+        let halfWidth = 0;
 
-        function step() {
+        // halfWidth = N * (slideW + gap) — exatamente o lote dos N originais.
+        // Ao chegar nesse ponto, scrollLeft -= halfWidth e o usuário não vê
+        // diferença porque o slot atual é o clone do slide[0].
+        function recalcHalfWidth() {
+            const slideW = originalSlides[0].getBoundingClientRect().width;
+            const gap    = parseFloat(getComputedStyle(track).gap) || 0;
+            halfWidth = N * (slideW + gap);
+        }
+        // Espera 2 frames pro layout estabilizar antes de calcular
+        requestAnimationFrame(() => requestAnimationFrame(recalcHalfWidth));
+        window.addEventListener('resize', recalcHalfWidth);
+
+        function tick(now) {
+            requestAnimationFrame(tick);
+            if (!lastTime) { lastTime = now; return; }
+            const dt = (now - lastTime) / 1000;
+            lastTime = now;
+
+            if (halfWidth === 0) return;
             if (Date.now() < pausedUntil) return;
             if (document.hidden) return;
 
-            const slideW = slides[0].getBoundingClientRect().width;
-            const gap    = parseFloat(getComputedStyle(track).gap) || 0;
-            const stride = slideW + gap;
-            const maxScroll = track.scrollWidth - track.clientWidth;
-            const atEnd  = track.scrollLeft >= maxScroll - 8;
-
-            if (atEnd) {
-                track.scrollTo({ left: 0, behavior: 'smooth' });
-                // segura o próximo step pra animação de loopback completar
-                pausedUntil = Date.now() + LOOPBACK_PAUSE;
-            } else {
-                track.scrollBy({ left: stride, behavior: 'smooth' });
+            let nextScroll = track.scrollLeft + SPEED_PX_PER_SEC * dt;
+            if (nextScroll >= halfWidth) {
+                nextScroll -= halfWidth; // jump invisível
             }
+            track.scrollLeft = nextScroll;
         }
+        requestAnimationFrame(tick);
 
         function pauseFor(ms) {
             pausedUntil = Math.max(pausedUntil, Date.now() + ms);
         }
 
-        // Único timer global — sempre rodando, decisão de pular fica no step()
-        setInterval(step, STEP_MS);
-
-        // === Pausas por interação ===
-        // Hover desktop
-        track.addEventListener('mouseenter', () => pauseFor(PAUSE_FOREVER));
-        track.addEventListener('mouseleave', () => { pausedUntil = 0; });
-
-        // Touch mobile
-        track.addEventListener('touchstart', () => pauseFor(PAUSE_FOREVER), { passive: true });
-        track.addEventListener('touchend',   () => pauseFor(TOUCH_PAUSE),   { passive: true });
-
-        // Trackpad/wheel scroll horizontal manual
-        track.addEventListener('wheel', () => pauseFor(TOUCH_PAUSE), { passive: true });
-
-        // Cliques manuais nas setas
+        // Pausa breve em touch/click — depois retoma SEMPRE
+        track.addEventListener('touchstart', () => pauseFor(TOUCH_PAUSE), { passive: true });
+        track.addEventListener('touchend',   () => pauseFor(TOUCH_PAUSE), { passive: true });
+        track.addEventListener('wheel',      () => pauseFor(TOUCH_PAUSE), { passive: true });
         if (prev) prev.addEventListener('click', () => pauseFor(CLICK_PAUSE));
         if (next) next.addEventListener('click', () => pauseFor(CLICK_PAUSE));
-
-        // Cliques nos dots (apenas quando clica num dot, não em qualquer parte do container)
         if (dotsBox) {
             dotsBox.addEventListener('click', (e) => {
                 if (e.target.classList.contains('carousel-dot')) pauseFor(CLICK_PAUSE);

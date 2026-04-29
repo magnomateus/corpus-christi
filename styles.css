@@ -613,11 +613,9 @@ strong, b {
     display: flex;
     gap: var(--space-md);
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
     padding: 4px 4px 12px;
-    /* offset pra que o primeiro/último slide centralizem com snap */
     scroll-padding-inline: 0;
 }
 
