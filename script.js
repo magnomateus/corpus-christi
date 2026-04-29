@@ -159,60 +159,65 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollByOne(1); }
         });
 
-        // ==== AUTOPLAY ====
-        // Respeita prefers-reduced-motion (acessibilidade)
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReduced) return;
+        // ==== AUTOPLAY (lógica baseada em timestamp — sem race conditions) ====
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-        const AUTOPLAY_INTERVAL = 4000; // 4s por slide
-        const RESUME_DELAY = 6000;      // retoma 6s após interação manual
-        let autoplayTimer = null;
-        let resumeTimer = null;
+        const STEP_MS         = 4000;        // intervalo entre slides
+        const LOOPBACK_PAUSE  = 1400;        // espera animação de volta ao início terminar
+        const TOUCH_PAUSE     = 2500;        // após swipe
+        const CLICK_PAUSE     = 6000;        // após clique manual em seta/dot
+        const PAUSE_FOREVER   = 9 * 24 * 3600 * 1000; // hover/touch active
 
-        function startAutoplay() {
-            stopAutoplay();
-            autoplayTimer = setInterval(() => {
-                const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
-                if (atEnd) {
-                    track.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    scrollByOne(1);
-                }
-            }, AUTOPLAY_INTERVAL);
+        let pausedUntil = 0;
+
+        function step() {
+            if (Date.now() < pausedUntil) return;
+            if (document.hidden) return;
+
+            const slideW = slides[0].getBoundingClientRect().width;
+            const gap    = parseFloat(getComputedStyle(track).gap) || 0;
+            const stride = slideW + gap;
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            const atEnd  = track.scrollLeft >= maxScroll - 8;
+
+            if (atEnd) {
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+                // segura o próximo step pra animação de loopback completar
+                pausedUntil = Date.now() + LOOPBACK_PAUSE;
+            } else {
+                track.scrollBy({ left: stride, behavior: 'smooth' });
+            }
         }
 
-        function stopAutoplay() {
-            if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
-            if (resumeTimer)  { clearTimeout(resumeTimer);  resumeTimer = null; }
+        function pauseFor(ms) {
+            pausedUntil = Math.max(pausedUntil, Date.now() + ms);
         }
 
-        function pauseAndResume() {
-            stopAutoplay();
-            resumeTimer = setTimeout(startAutoplay, RESUME_DELAY);
+        // Único timer global — sempre rodando, decisão de pular fica no step()
+        setInterval(step, STEP_MS);
+
+        // === Pausas por interação ===
+        // Hover desktop
+        track.addEventListener('mouseenter', () => pauseFor(PAUSE_FOREVER));
+        track.addEventListener('mouseleave', () => { pausedUntil = 0; });
+
+        // Touch mobile
+        track.addEventListener('touchstart', () => pauseFor(PAUSE_FOREVER), { passive: true });
+        track.addEventListener('touchend',   () => pauseFor(TOUCH_PAUSE),   { passive: true });
+
+        // Trackpad/wheel scroll horizontal manual
+        track.addEventListener('wheel', () => pauseFor(TOUCH_PAUSE), { passive: true });
+
+        // Cliques manuais nas setas
+        if (prev) prev.addEventListener('click', () => pauseFor(CLICK_PAUSE));
+        if (next) next.addEventListener('click', () => pauseFor(CLICK_PAUSE));
+
+        // Cliques nos dots (apenas quando clica num dot, não em qualquer parte do container)
+        if (dotsBox) {
+            dotsBox.addEventListener('click', (e) => {
+                if (e.target.classList.contains('carousel-dot')) pauseFor(CLICK_PAUSE);
+            });
         }
-
-        // Pausa em hover/touch e retoma quando sai
-        track.addEventListener('mouseenter', stopAutoplay);
-        track.addEventListener('mouseleave', () => {
-            resumeTimer = setTimeout(startAutoplay, 1000);
-        });
-        track.addEventListener('touchstart', stopAutoplay, { passive: true });
-        track.addEventListener('touchend',   () => {
-            resumeTimer = setTimeout(startAutoplay, 2000);
-        });
-
-        // Cliques manuais (setas/dots) reiniciam o timer
-        if (prev) prev.addEventListener('click', pauseAndResume);
-        if (next) next.addEventListener('click', pauseAndResume);
-        if (dotsBox) dotsBox.addEventListener('click', pauseAndResume);
-
-        // Pausa quando aba não está visível (economiza recursos)
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) stopAutoplay();
-            else startAutoplay();
-        });
-
-        startAutoplay();
     }
     setupCarousel();
 
