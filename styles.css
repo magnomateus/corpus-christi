@@ -632,7 +632,7 @@ strong, b {
 .carousel-slide {
     flex: 0 0 calc(100% - 32px);
     scroll-snap-align: center;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 2 / 3;
     border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--text-white);

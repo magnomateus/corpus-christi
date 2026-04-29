@@ -158,6 +158,61 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByOne(-1); }
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollByOne(1); }
         });
+
+        // ==== AUTOPLAY ====
+        // Respeita prefers-reduced-motion (acessibilidade)
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) return;
+
+        const AUTOPLAY_INTERVAL = 4000; // 4s por slide
+        const RESUME_DELAY = 6000;      // retoma 6s após interação manual
+        let autoplayTimer = null;
+        let resumeTimer = null;
+
+        function startAutoplay() {
+            stopAutoplay();
+            autoplayTimer = setInterval(() => {
+                const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
+                if (atEnd) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    scrollByOne(1);
+                }
+            }, AUTOPLAY_INTERVAL);
+        }
+
+        function stopAutoplay() {
+            if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
+            if (resumeTimer)  { clearTimeout(resumeTimer);  resumeTimer = null; }
+        }
+
+        function pauseAndResume() {
+            stopAutoplay();
+            resumeTimer = setTimeout(startAutoplay, RESUME_DELAY);
+        }
+
+        // Pausa em hover/touch e retoma quando sai
+        track.addEventListener('mouseenter', stopAutoplay);
+        track.addEventListener('mouseleave', () => {
+            resumeTimer = setTimeout(startAutoplay, 1000);
+        });
+        track.addEventListener('touchstart', stopAutoplay, { passive: true });
+        track.addEventListener('touchend',   () => {
+            resumeTimer = setTimeout(startAutoplay, 2000);
+        });
+
+        // Cliques manuais (setas/dots) reiniciam o timer
+        if (prev) prev.addEventListener('click', pauseAndResume);
+        if (next) next.addEventListener('click', pauseAndResume);
+        if (dotsBox) dotsBox.addEventListener('click', pauseAndResume);
+
+        // Pausa quando aba não está visível (economiza recursos)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stopAutoplay();
+            else startAutoplay();
+        });
+
+        startAutoplay();
     }
     setupCarousel();
 
