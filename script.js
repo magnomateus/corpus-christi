@@ -186,11 +186,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // diferença porque o slot atual é o clone do slide[0].
         function recalcHalfWidth() {
             const slideW = originalSlides[0].getBoundingClientRect().width;
-            const gap    = parseFloat(getComputedStyle(track).gap) || 0;
+            const gap    = parseFloat(getComputedStyle(track).columnGap)
+                        || parseFloat(getComputedStyle(track).gap) || 0;
             halfWidth = N * (slideW + gap);
         }
-        // Espera 2 frames pro layout estabilizar antes de calcular
-        requestAnimationFrame(() => requestAnimationFrame(recalcHalfWidth));
+        recalcHalfWidth();
+        requestAnimationFrame(recalcHalfWidth); // re-cala após 1 frame (layout settled)
         window.addEventListener('resize', recalcHalfWidth);
 
         function tick(now) {
@@ -199,9 +200,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const dt = (now - lastTime) / 1000;
             lastTime = now;
 
-            if (halfWidth === 0) return;
             if (Date.now() < pausedUntil) return;
             if (document.hidden) return;
+
+            // Defensivo: recalcula se ainda zerado
+            if (halfWidth === 0) recalcHalfWidth();
+            if (halfWidth === 0) return;
 
             let nextScroll = track.scrollLeft + SPEED_PX_PER_SEC * dt;
             if (nextScroll >= halfWidth) {

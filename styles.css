@@ -613,10 +613,8 @@ strong, b {
     display: flex;
     gap: var(--space-md);
     overflow-x: auto;
-    scroll-snap-type: x proximity;
     scrollbar-width: none;
     padding: 4px 4px 12px;
-    scroll-padding-inline: 0;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -629,7 +627,6 @@ strong, b {
 
 .carousel-slide {
     flex: 0 0 calc(50% - 12px);
-    scroll-snap-align: center;
     aspect-ratio: 2 / 3;
     border-radius: var(--radius-md);
     overflow: hidden;
