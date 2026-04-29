@@ -386,7 +386,7 @@ strong, b {
     background: #B5443A;
     color: var(--text-white);
     padding: 12px 0;
-    font-size: 0.9375rem;
+    font-size: 1.125rem;
     font-weight: var(--weight-bold);
     letter-spacing: 0.4px;
     text-align: center;
@@ -537,7 +537,7 @@ strong, b {
 @media (max-width: 768px) {
     .urgency-bar {
         padding: 10px 0;
-        font-size: 0.8125rem;
+        font-size: 1rem;
     }
 
     .hero-section {
