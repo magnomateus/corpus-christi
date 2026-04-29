@@ -1172,40 +1172,6 @@ strong, b {
     text-shadow: 0 2px 8px rgba(224, 127, 101, 0.18);
 }
 
-/* Banner comparativo — empurra o usuário pro Premium */
-.pricing-tip {
-    max-width: 720px;
-    margin: 0 auto var(--space-lg);
-    padding: var(--space-md) var(--space-lg);
-    background: linear-gradient(135deg, rgba(212, 166, 86, 0.14) 0%, rgba(245, 160, 136, 0.10) 100%);
-    border: 2px dashed var(--gold);
-    border-radius: var(--radius-md);
-    text-align: center;
-    font-family: var(--font-heading);
-    font-size: 1.0625rem;
-    font-weight: var(--weight-semibold);
-    color: var(--text-dark);
-    line-height: 1.5;
-}
-
-.pricing-tip strong {
-    color: var(--gold-dark);
-    font-weight: var(--weight-extrabold);
-}
-
-.pricing-tip-icon {
-    font-size: 1.25rem;
-    margin-right: 6px;
-    vertical-align: middle;
-}
-
-@media (max-width: 768px) {
-    .pricing-tip {
-        font-size: 0.9375rem;
-        padding: var(--space-md);
-    }
-}
-
 /* === Pricing grid === */
 .pricing-grid {
     display: grid;
@@ -1378,30 +1344,12 @@ strong, b {
     border-bottom: none;
 }
 
-.plan-features li:not(.bonus-feature):not(.feature-missing)::before {
+.plan-features li:not(.bonus-feature)::before {
     content: '✅';
     position: absolute;
     left: 0;
     top: 9px;
     font-size: 0.875rem;
-}
-
-/* Itens "faltando" no Plano Básico — gera tensão de loss aversion */
-.plan-features li.feature-missing {
-    color: var(--text-light);
-    opacity: 0.75;
-    font-style: italic;
-}
-
-.plan-features li.feature-missing::before {
-    content: '✕';
-    position: absolute;
-    left: 4px;
-    top: 9px;
-    font-size: 0.95rem;
-    color: var(--coral-dark);
-    font-weight: var(--weight-extrabold);
-    font-style: normal;
 }
 
 .plan-features li.bonus-feature {
