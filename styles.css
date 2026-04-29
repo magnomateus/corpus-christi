@@ -521,7 +521,7 @@ strong, b {
 }
 
 .hero-sub-headline strong {
-    color: var(--sky-blue-dark);
+    color: var(--text-dark);
     font-weight: var(--weight-bold);
 }
 
