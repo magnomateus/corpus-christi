@@ -525,17 +525,6 @@ strong, b {
     font-weight: var(--weight-bold);
 }
 
-/* Frase de remate em italic+bold coral (eco do hero-headline-emph) */
-.hero-sub-emph {
-    display: block;
-    margin-top: 12px;
-    font-style: italic;
-    font-weight: var(--weight-bold);
-    color: var(--coral-dark);
-    font-size: 1.0625rem;
-    letter-spacing: 0.2px;
-}
-
 /* Mockup */
 .hero-mockup {
     max-width: 460px;
@@ -596,10 +585,6 @@ strong, b {
         width: 44px;
         height: 2px;
         margin-bottom: var(--space-sm);
-    }
-    .hero-sub-emph {
-        font-size: 0.9375rem;
-        margin-top: 10px;
     }
     .hero-mockup {
         max-width: 300px;
