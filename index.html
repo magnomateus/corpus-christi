@@ -376,60 +376,30 @@
                 <p class="offer-countdown-sub">Después de que el contador llegue a cero, el precio vuelve al valor normal.</p>
             </div>
 
-            <div class="pricing-grid">
+            <div class="pricing-grid pricing-grid-single">
                 <!-- ============================
-                     PLAN BÁSICO
-                     ============================ -->
-                <article class="pricing-card pricing-card-basic">
-                    <h3 class="plan-name">Plan Básico</h3>
-
-                    <div class="plan-price">
-                        <span class="price-value">$9.90 USD</span>
-                        <span class="price-payment">pago único</span>
-                    </div>
-
-                    <ul class="plan-features">
-                        <li>+150 plantillas en PDF</li>
-                        <li>Acceso inmediato por correo</li>
-                        <li>Acceso de por vida</li>
-                        <li>Garantía incondicional de 7 días</li>
-                    </ul>
-
-                    <button type="button"
-                            class="btn btn-plan btn-plan-basic pulse"
-                            id="btn-basic-plan"
-                            aria-haspopup="dialog">
-                        OBTENER PLAN BÁSICO
-                    </button>
-
-                    <p class="offer-security">
-                        <span aria-hidden="true">🔒</span> Pago 100% Seguro
-                    </p>
-                </article>
-
-                <!-- ============================
-                     PLAN PREMIUM (destacado)
+                     OFERTA UNICA
                      ============================ -->
                 <article id="plano-premium" class="pricing-card pricing-card-premium">
                     <div class="ribbon">
-                        <span aria-hidden="true">⭐</span> MÁS ELEGIDO
+                        <span aria-hidden="true">⭐</span> OFERTA ESPECIAL
                     </div>
 
                     <div class="premium-cover-wrapper">
                         <img src="images/hero-composicao.webp"
-                             alt="150 Plantillas de Alfombras para Corpus Christi — Plan Premium"
+                             alt="150 Plantillas de Alfombras para Corpus Christi"
                              class="premium-cover"
                              width="900" height="900"
                              loading="lazy">
                     </div>
 
-                    <h3 class="plan-name">Plan Premium</h3>
+                    <h3 class="plan-name">Acceso Completo</h3>
 
                     <div class="plan-price">
                         <span class="price-from-small">
                             De <span class="strikethrough">$49 USD</span> por...
                         </span>
-                        <span class="price-value">$14.90 USD</span>
+                        <span class="price-value">$9.90 USD</span>
                         <span class="price-payment-highlight">
                             <strong>Puedes pagar en tu moneda local</strong>
                         </span>
@@ -450,7 +420,7 @@
 
                     <a href="https://pay.hotmart.com/T105709501G?checkoutMode=10"
                        class="btn btn-plan btn-plan-premium pulse">
-                        OBTENER PLAN PREMIUM 🎁
+                        QUIERO ACCESO AHORA 🎁
                     </a>
 
                     <p class="offer-security">
@@ -720,54 +690,6 @@
         </div>
     </footer>
 
-    <!-- ================================================================
-         POPUP DOWNSELL — activado por el botón "Plan Básico"
-         ================================================================ -->
-    <div id="popup-offer"
-         class="popup-overlay"
-         role="dialog"
-         aria-modal="true"
-         aria-labelledby="popup-title"
-         aria-hidden="true">
-        <div class="popup-content">
-            <button type="button" class="popup-close" id="popup-close" aria-label="Cerrar oferta">&times;</button>
-
-            <span class="popup-badge">
-                <span aria-hidden="true">⭐</span> OFERTA EXCLUSIVA
-            </span>
-
-            <h2 class="popup-title" id="popup-title">
-                Solo Ahora,<br>
-                Plan Premium por...
-            </h2>
-
-            <div class="popup-price-block">
-                <span class="popup-price-from">
-                    De <span class="strikethrough">$14.90 USD</span> por...
-                </span>
-                <span class="popup-price">$11.90 USD</span>
-                <span class="popup-price-savings">
-                    Ahorras $3 USD + ¡llevas los 4 BONOS!
-                </span>
-            </div>
-
-            <ul class="popup-features">
-                <li>✅ +150 plantillas de alfombras en PDF</li>
-                <li>🎁 Guía de Materiales para Armado</li>
-                <li>🎁 Guía de Combinación de Colores</li>
-                <li>🎁 Paso a Paso del Equipo</li>
-                <li>🎁 Plantillas Extras de Símbolos</li>
-            </ul>
-
-            <a href="https://pay.hotmart.com/T105709501G?checkoutMode=10" class="btn-popup-cta pulse">
-                QUIERO ESTA OFERTA EXCLUSIVA 🎁
-            </a>
-
-            <a href="https://pay.hotmart.com/T105709501G?checkoutMode=10" class="popup-basic-link">
-                No, prefiero el Plan Básico ($9.90 USD)
-            </a>
-        </div>
-    </div>
 
     <!-- JavaScript -->
     <script src="script.js"></script>

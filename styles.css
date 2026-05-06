@@ -1278,6 +1278,11 @@ strong, b {
     align-items: stretch;
 }
 
+.pricing-grid-single {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+}
+
 .pricing-card {
     background: var(--text-white);
     border-radius: var(--radius-lg);
